@@ -18,6 +18,10 @@ document.querySelector('.check').addEventListener('click', function () {
     document.querySelector('.number').textContent = secretNumber;
     document.querySelector('body').style.backgroundColor = '#60b347';
     document.querySelector('.number').style.width = '30rem';
+    document.querySelector('.score-table').classList.remove('hidden');
+    const li = document.createElement('li');
+    document.querySelector('.highscore-list').appendChild(li);
+    document.querySelector('.initials-entry').classList.remove('hidden');
 
     //activate the higherscore:
     if (score > highscore) {
@@ -37,6 +41,10 @@ document.querySelector('.check').addEventListener('click', function () {
       document.querySelector('.check').style.cursor = 'not-allowed';
       document.querySelector('.check').style.backgroundColor = '#4A4A4A';
       document.querySelector('.score').textContent = 0;
+      document.querySelector('.score-table').classList.remove('hidden');
+      const li = document.createElement('li');
+      document.querySelector('.highscore-list').appendChild(li);
+      document.querySelector('.initials-entry').classList.remove('hidden');
     }
 
     //When the guess is too low
@@ -48,6 +56,10 @@ document.querySelector('.check').addEventListener('click', function () {
     } else {
       document.querySelector('.message').textContent = '💥 You lost the game!';
       document.querySelector('.score').textContent = 0;
+      document.querySelector('.score-table').classList.remove('hidden');
+      const li = document.createElement('li');
+      document.querySelector('.highscore-list').appendChild(li);
+      document.querySelector('.initials-entry').classList.remove('hidden');
     }
   }
 });
@@ -66,13 +78,23 @@ document.querySelector('.again').addEventListener('click', function () {
   document.querySelector('.check').disabled = false;
   document.querySelector('.check').style.cursor = 'pointer';
   document.querySelector('.check').style.backgroundColor = '#ccc';
+  document.querySelector('.score-table').classList.add('hidden');
 });
 
-//Activate the High Score
+// listen for initials submit:
+document
+  .querySelector('#submit-initials')
+  .addEventListener('click', function () {
+    const initials = document
+      .querySelector('#initials')
+      .value.toUpperCase()
+      .slice(0, 10);
+    if (!initials) return;
 
-//how to setup highscore
-//1. when the users find out secretNumber,
-// get the score and assign it to high score class.
-// keep it on the screen in the next game: after clicked the again
-// and if the score of next game is higher than current highscore value;
-// then update the highscore with the new value.
+    const li = document.createElement('li');
+    li.textContent = `${initials} .......... ${score}`; // spacing like classic arcade style
+    document.querySelector('.highscore-list').appendChild(li);
+
+    document.querySelector('.initials-entry').classList.add('hidden');
+    document.querySelector('#initials').value = '';
+  });
